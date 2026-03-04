@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
-import { Await, Link } from '@remix-run/react';
-import { Image, Money } from '@shopify/hydrogen';
-import type { EventReadyQuery } from 'storefrontapi.generated';
-import { useVariantUrl } from '~/lib/variants';
+import {Suspense} from 'react';
+import {Await, Link} from '@remix-run/react';
+import {Image, Money} from '@shopify/hydrogen';
+import type {EventReadyQuery} from 'storefrontapi.generated';
+import {useVariantUrl} from '~/lib/variants';
 
 export default function EventReady({
   products,
@@ -38,7 +38,7 @@ export default function EventReady({
           <Suspense fallback={<div>Loading...</div>}>
             <Await resolve={products}>
               {(response) =>
-                response?.products.nodes.map((product, index) => {
+                response?.products?.nodes.map((product, index) => {
                   // eslint-disable-next-line react-hooks/rules-of-hooks
                   const variantUrl = useVariantUrl(product.handle);
                   const image = product.featuredImage;
@@ -63,23 +63,23 @@ export default function EventReady({
                             loading="lazy"
                           />
                         )}
-                        </Link>
+                      </Link>
 
-                        <div className="flex flex-col flex-1">
-                          <h2 className="text-center font-bold leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[20px] mt-2 !mb-0">
-                            {product.title}
-                          </h2>
-                          <ul className="text-center font-normal leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[16px] mt-1">
-                            {product.description && (
-                              <li className="text-center font-normal leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[16px] !mb-0">
-                                {product.description}
-                              </li>
-                            )}
-                            <li>
-                              <Money data={product.priceRange.minVariantPrice} />
+                      <div className="flex flex-col flex-1">
+                        <h2 className="text-center font-bold leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[20px] mt-2 !mb-0">
+                          {product.title}
+                        </h2>
+                        <ul className="text-center font-normal leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[16px] mt-1">
+                          {product.description && (
+                            <li className="text-center font-normal leading-[26px] tracking-[0.32px] text-[#2B2A2A] font-[Mr Eaves XL Mod OT] text-[16px] !mb-0">
+                              {product.description}
                             </li>
-                          </ul>
-                        </div>
+                          )}
+                          <li>
+                            <Money data={product.priceRange.minVariantPrice} />
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   );
                 })

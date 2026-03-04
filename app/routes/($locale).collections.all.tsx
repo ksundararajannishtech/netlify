@@ -1,6 +1,5 @@
-import {type, type LoaderFunctionArgs} from '@netlify/remix-runtime';
-
-import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {useLoaderData, type MetaFunction} from 'react-router';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
@@ -43,9 +42,10 @@ export async function loader(args: LoaderFunctionArgs) {
   const enableRealTimePricing = session.get('enableRealTimePricing');
   const pricingUrl = session.get('pricingUrl');
   const timeout = session.get('timeout');
+  console.log('111', erpConfig);
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-  console.log('111', erpConfig);
+  //console.log('111', erpConfig);
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(
     args,
@@ -102,7 +102,7 @@ async function fetchProductPricing(
     console.log(PRICING_TIMEOUT);
     const response = await fetch(url, {
       headers: {'Content-Type': 'application/json'},
-      signal: AbortSignal.timeout(PRICING_TIMEOUT),
+      signal: AbortSignal.timeout(6000),
     });
     if (!response.ok) {
       throw new Error(`Pricing API returned ${response.status}`);

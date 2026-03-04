@@ -29,7 +29,7 @@ export default function JustLandedSection({
           <Suspense fallback={<div>Loading...</div>}>
             <Await resolve={products}>
               {(response) =>
-                response?.products.nodes.map((product, idx) => {
+                response?.products?.nodes.map((product, idx) => {
                   // eslint-disable-next-line react-hooks/rules-of-hooks
                   const variantUrl = useVariantUrl(
                     product.handle,
